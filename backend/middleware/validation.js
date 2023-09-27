@@ -1,4 +1,4 @@
-const validator = require("email-validator");
+
 
 const validation = (req, res, next) => {
 
