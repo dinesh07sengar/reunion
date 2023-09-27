@@ -1,8 +1,8 @@
 const express = require('express')
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-const { Usermodel } = require('../model/User.model')
-const { Propmodel } = require('../model/Prop.model');
+const { Usermodel } = require('../models/User.model')
+const { Propmodel } = require('../models/Prop.model');
 const { validation } = require('../middleware/validation');
 const { authentication } = require('../middleware/authentication');
 
