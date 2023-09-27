@@ -11,8 +11,8 @@ export const Navbar = () => {
             </Box>
             <Spacer/>
             <Box display={"flex"} gap={"8"}>
-                <Button size={"md"} w={"110px"} bg={"#A2DEED"} borderRadius={"10px"}>Login</Button>
-                <Button w={"110px"} bg={"#D1EFF7"} borderRadius={"10px"}>Signup</Button>
+                <Button size={"md"} w={"110px"} bg={"#A2DEED"} borderRadius={"12px"}>Login</Button>
+                <Button w={"110px"} bg={"#D1EFF7"} borderRadius={"12px"}>Signup</Button>
             </Box>
         </Flex>
     </Box>

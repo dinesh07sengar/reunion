@@ -1,14 +1,101 @@
-import { Box, Grid, Heading } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Divider, Grid, Heading, Input, Select, SimpleGrid, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Body } from '../card/Body'
+
 
 export const Home = () => {
-  return (
-    <div>
-        <Box>
-            <Heading>Search Properties for reat</Heading>
-            <Grid></Grid>
+  const [state, setstate] = useState({ Date: "", price: "100000", propertytype: "All", city: "" })
+  const[data,setdate]= useState([])
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    console.log(value)
 
-        </Box>
-    </div>
+
+
+    setstate({ ...state, [name]: value })
+
+  }
+ 
+  const fetchData=async()=> {
+    const response = await fetch("http://localhost:8000/api/list-properties");
+    const res = await response.json();
+    console.log(res.data);
+    setdate(res.data)
+  }
+
+  useEffect(()=>{
+    fetchData()
+
+
+  },[])
+  return (
+    <Box w={"86%"} m={"2% auto"}>
+      <Box>
+        <Heading textAlign={"left"} size={"lg"}>Search Properties for rent</Heading>
+        <SimpleGrid columns={5} gap={"1"} textAlign={"left"} bg={"#D9D9D9"} px={" 1%"} borderRadius={"20px"} fontWeight={"bold"}>
+          <Box alignItems={"left"} textAlign={"left"} p={"2%"} borderRight={"2px solid #6B6B6B"}>
+            <Text>City</Text>
+            <Select name='city' onChange={handleChange} value={state.city} size={"sm"}>
+              <option value={"all"}>Anywhere</option>
+              <option value={"mumbai"}>mumbai</option>
+              <option value={"goa"}>Goa</option>
+              <option value={"delhi"}>Delhi</option>
+              <option value={"lucknow"}>Lucknow</option>
+            </Select>
+          </Box>
+          <Box p={"2%"} borderRight={"2px solid #6B6B6B"}>
+            <Text>Available From</Text>
+            <Input
+              size={"sm"}
+              type='Date'
+              name='Date'
+              value={state.Date}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box p={"2%"} borderRight={"2px solid #6B6B6B"}>
+            <Text>Price <span >&#8377;{state.price}</span></Text>
+
+            <input
+              style={{ width: "100%" }}
+
+
+              type='range'
+              name='price'
+              value={state.price}
+              onChange={handleChange}
+
+              min={1000}
+              max={100000}
+              step={10}
+
+            />
+
+
+
+          </Box>
+
+          <Box p={"2%"} >
+            <Text>Property type</Text>
+            <Select name='propertytype' onChange={handleChange} value={state.propertytype} size={"sm"}>
+              <option value={"All"}>All</option>
+              <option value={"House"}>House</option>
+              <option value={"villa"}>Villa</option>
+              <option value={"1 bhk flat"}>1 bhk flat</option>
+              <option value={"2 bhk flat"}>2 bhk flat</option>
+              <option value={"apartment"}>apartment</option>
+            </Select>
+
+          </Box >
+          <Box textAlign={"center"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <Button bg={"#7A7EEE"} color={"white"} fontWeight={"semibold"} w={"120px"} borderRadius={"20px"}>Apply</Button>
+          </Box>
+
+        </SimpleGrid>
+        <Body  data={data}/>
+
+
+      </Box>
+    </Box>
   )
 }

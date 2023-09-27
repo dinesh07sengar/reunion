@@ -5,12 +5,16 @@ const propSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    url:
+    {
+        type:String
+    },
     Location: {
         type: String,
         required: true,
     },
     dateFrom: {
-        type: Date,
+        type: String,
         required: true,
     },
     price: {
