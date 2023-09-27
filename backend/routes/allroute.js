@@ -10,6 +10,7 @@ const api = express.Router()
 
 api.post("/signup", validation, async (req, res) => {
     console.log(req.body)
+    //yha hay
     try {
         let check = await Usermodel.findOne({ email: req.body.email })
         if (check) {
