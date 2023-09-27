@@ -15,9 +15,44 @@ export const Home = () => {
     setstate({ ...state, [name]: value })
 
   }
+  const handlesort=()=>{
+    let sortedData = [...data];
+
+    
+    if (state.city !== 'all') {
+      sortedData = sortedData.filter(ele => ele.Location === state.city);
+    }
+  
+    
+    if (state.Date !== '') {
+      sortedData = sortedData.filter(ele => new Date(ele.availableFrom) >= new Date(state.Date));
+    }
+  
+    
+    sortedData.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  
+    
+    if (state.propertytype !== 'All') {
+      
+      sortedData = sortedData.filter(ele => ele.propertyType === state.propertytype);
+    }
+  
+    
+    setdate(sortedData);
+  };
+  
+
+  
+ 
+  
+  
+  
+  
+  
  
   const fetchData=async()=> {
-    const response = await fetch("http://localhost:8000/api/list-properties");
+    console.log("yha aya")
+    const response = await fetch("https://reunion-8fgk.onrender.com/api/list-properties");
     const res = await response.json();
     console.log(res.data);
     setdate(res.data)
@@ -31,16 +66,16 @@ export const Home = () => {
   return (
     <Box w={"86%"} m={"2% auto"}>
       <Box>
-        <Heading textAlign={"left"} size={"lg"}>Search Properties for rent</Heading>
-        <SimpleGrid columns={5} gap={"1"} textAlign={"left"} bg={"#D9D9D9"} px={" 1%"} borderRadius={"20px"} fontWeight={"bold"}>
+        <Heading textAlign={"left"} size={"lg"} mb={"2%"}>Search Properties for rent</Heading>
+        <SimpleGrid columns={["1","2","5"]} gap={"1"} textAlign={"left"} bg={"#D9D9D9"} px={" 1%"} borderRadius={"20px"} fontWeight={"bold"}>
           <Box alignItems={"left"} textAlign={"left"} p={"2%"} borderRight={"2px solid #6B6B6B"}>
             <Text>City</Text>
-            <Select name='city' onChange={handleChange} value={state.city} size={"sm"}>
+            <Select name='city' onChange={handleChange} value={state.city} size={"sm"} >
               <option value={"all"}>Anywhere</option>
-              <option value={"mumbai"}>mumbai</option>
-              <option value={"goa"}>Goa</option>
-              <option value={"delhi"}>Delhi</option>
-              <option value={"lucknow"}>Lucknow</option>
+              <option value={"mumbai, thane"}>mumbai</option>
+              <option value={"Goa"}>Goa</option>
+              <option value={"Delhi"}>Delhi</option>
+              <option value={"Lucknow"}>Lucknow</option>
             </Select>
           </Box>
           <Box p={"2%"} borderRight={"2px solid #6B6B6B"}>
@@ -80,7 +115,7 @@ export const Home = () => {
             <Select name='propertytype' onChange={handleChange} value={state.propertytype} size={"sm"}>
               <option value={"All"}>All</option>
               <option value={"House"}>House</option>
-              <option value={"villa"}>Villa</option>
+              <option value={"Villa"}>Villa</option>
               <option value={"1 bhk flat"}>1 bhk flat</option>
               <option value={"2 bhk flat"}>2 bhk flat</option>
               <option value={"apartment"}>apartment</option>
@@ -88,7 +123,7 @@ export const Home = () => {
 
           </Box >
           <Box textAlign={"center"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
-            <Button bg={"#7A7EEE"} color={"white"} fontWeight={"semibold"} w={"120px"} borderRadius={"20px"}>Apply</Button>
+            <Button bg={"#7A7EEE"} color={"white"} fontWeight={"semibold"} w={"120px"} borderRadius={"20px"} onClick={handlesort}>Apply</Button>
           </Box>
 
         </SimpleGrid>
